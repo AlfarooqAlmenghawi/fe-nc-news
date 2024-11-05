@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getArticleByID } from "../../api.js";
+import { getArticleByID, getCommentsOfSpecificArticle } from "../../api.js";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { CurrentPageLabelContext } from "../contexts/CurrentPageLabel.jsx";
@@ -12,6 +12,8 @@ function IndividualArticle() {
   );
 
   const [article, setArticle] = useState([]);
+  const [commentsOfIndividualArticle, setCommentsOfIndividualArticle] =
+    useState([]);
   const { article_id } = useParams();
 
   setCurrentPageLabel(article.title);
@@ -22,25 +24,29 @@ function IndividualArticle() {
       console.log(response.data.article);
       setArticle(response.data.article[0]);
     });
+    getCommentsOfSpecificArticle(article_id).then((response) => {
+      console.log(response.data.commentsOfThisArticle);
+      setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
+    });
   }, []);
 
   return (
     <>
+      {currentPageLabel ? (
+        <h2 className="current-page-label">{currentPageLabel}</h2>
+      ) : (
+        <h2 className="current-page-label">Loading...</h2>
+      )}
       <div className="full-individual-article">
         <div className="full-individual-article-itself">
           <div className="full-individual-article-things-to-center">
-            {currentPageLabel ? (
-              <h2 className="current-page-label">{currentPageLabel}</h2>
-            ) : (
-              <h2 className="current-page-label">Loading...</h2>
-            )}
-            <p className="full-individual-article-topic">
-              Topic: {article.topic}
-            </p>
             <img
               className="full-individual-article-image"
               src={article.article_img_url}
             />
+            <p className="full-individual-article-topic">
+              Topic: {article.topic}
+            </p>
           </div>
           <p className="full-individual-article-text">{article.body}</p>
 
@@ -54,7 +60,18 @@ function IndividualArticle() {
         </div>
         <div className="full-individual-article-comments">
           <div className="entire-comments-of-full-individual-article">
-            <p>For comments</p>
+            <p>Comments:</p>
+            {commentsOfIndividualArticle.map((comment) => {
+              return (
+                <div className="individual-comment">
+                  <p>Comment: {comment.body}</p>
+                  <p>
+                    By: {comment.author} at {comment.created_at}
+                  </p>
+                  <p>Upvotes: {comment.votes}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

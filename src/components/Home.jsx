@@ -50,6 +50,8 @@ function Home() {
                   <p class="article-text">Author: {article.author}</p>
                   <p class="article-text">Created: {article.created_at}</p>
                   <p class="article-text">Topic: {article.topic}</p>
+                  <p class="article-text">Upvotes: {article.votes}</p>
+                  <p class="article-text">Comments: {article.comment_count}</p>
                 </div>
               </div>
             </>
