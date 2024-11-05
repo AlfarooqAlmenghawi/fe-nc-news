@@ -22,7 +22,7 @@ function Header() {
           onClick={test}
           className="menu-icon"
           type="image"
-          src="../../images/icon.png"
+          src="../../images/icon_small.png"
         />
         <nav className="sideBar">
           <div className="sideBarLink">
@@ -32,8 +32,8 @@ function Header() {
             <Link to="/topics">Topics</Link>
           </div>
         </nav>
-        <h1>Articles and News</h1>
-        <button>Sign In/Create An Account</button>
+        <h1 className="website-title">Articles and News</h1>
+        <button className="sign-in-button">Sign In/Create An Account</button>
       </div>
     </>
   );

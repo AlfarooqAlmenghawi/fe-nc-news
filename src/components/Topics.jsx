@@ -8,7 +8,7 @@ function Topics() {
 
   setCurrentPageLabel("Topics");
 
-  return <h2>{currentPageLabel}</h2>;
+  return <h2 className="current-page-label">{currentPageLabel}</h2>;
 }
 
 export default Topics;

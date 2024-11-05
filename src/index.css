@@ -1,5 +1,32 @@
+@font-face {
+  font-family: "Aku&Kamu";
+  src: url("../unique_font/Aku&Kamu.otf");
+}
+
+.website-title {
+  font-family: "Aku&Kamu", sans-serif;
+  font-weight: 500;
+  text-align: center;
+}
+
 .menu-icon {
   width: 50px;
+}
+
+.current-page-label {
+  font-family: "Aku&Kamu", sans-serif;
+  font-weight: 500;
+  text-align: center;
+}
+
+.sign-in-button {
+  font-family: "Aku&Kamu", sans-serif;
+  font-weight: 500;
+}
+
+.sideBarLink {
+  font-family: "Aku&Kamu", sans-serif;
+  font-weight: 500;
 }
 
 .all-the-articles {
@@ -12,16 +39,74 @@
   border: 1px solid;
   cursor: pointer;
   width: 12em;
-  height: 16em;
+  height: 20em;
+}
+
+.article-info {
+  margin: auto;
+  text-align: center;
+  padding: 0.2em;
+  width: 100%;
+  overflow-wrap: break-word; /* Allows long words to break and wrap to the next line */
+  white-space: normal;
+}
+
+.article-title {
+  font-family: "Aku&Kamu", sans-serif;
+  font-size: 1em;
+  font-weight: 500;
 }
 
 .individual-article-image {
   padding: 0.5em;
-  width: 10em;
-  margin: auto;
+  width: 11em;
   text-align: center;
 }
 
 .article-text {
+  font-family: "Aku&Kamu", sans-serif;
   font-size: 0.8em;
+  font-weight: 500;
+}
+
+.full-individual-article {
+  border: 2px solid;
+  display: flex;
+}
+
+.full-individual-article-itself {
+  width: 80%;
+  border: 1px solid;
+}
+
+.full-individual-article-comments {
+  width: 20%;
+}
+
+.full-individual-article-text {
+  font-family: "Aku&Kamu", sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.full-individual-article-things-to-center {
+  text-align: center;
+}
+
+.full-individual-article-image {
+  width: 80%;
+}
+
+.full-individual-article-topic {
+  font-family: "Aku&Kamu", sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  text-align: center;
+}
+
+.full-individual-article-metadata {
+  font-family: "Aku&Kamu", sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  opacity: 0.3;
 }
