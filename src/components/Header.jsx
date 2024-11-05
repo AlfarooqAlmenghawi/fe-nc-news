@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CurrentPageLabelContext } from "../contexts/CurrentPageLabel.jsx";
 
 function Header() {
   const currentPageLabel = useContext(CurrentPageLabelContext);
+  const [showMenuBar, setShowMenuBar] = useState(false);
   let playing = false;
 
   function test() {
+    setShowMenuBar(!showMenuBar);
     // if (!playing) {
     //   var audio = new Audio("../../test/onthegang.mp3");
     //   playing = true;
@@ -18,22 +20,30 @@ function Header() {
   return (
     <>
       <div className="header">
-        <input
-          onClick={test}
-          className="menu-icon"
-          type="image"
-          src="../../images/icon.png"
-        />
-        <nav className="sideBar">
-          <div className="sideBarLink">
-            <Link to="/">Home</Link>
+        <div className="things-at-the-very-top">
+          <input
+            onClick={test}
+            className="menu-icon"
+            type="image"
+            src="../../images/icon_small.png"
+          />
+          <h1 className="website-title">Articles and News</h1>
+          <button className="sign-in-button">Sign In/Create An Account</button>
+        </div>
+        {showMenuBar ? (
+          <div className="sideBarLayout">
+            <nav className="sideBar">
+              <div className="sideBarLink">
+                <Link to="/">Home</Link>
+              </div>
+              <div className="sideBarLink">
+                <Link to="/topics">Topics</Link>
+              </div>
+            </nav>
           </div>
-          <div className="sideBarLink">
-            <Link to="/topics">Topics</Link>
-          </div>
-        </nav>
-        <h1>Articles and News</h1>
-        <button>Sign In/Create An Account</button>
+        ) : (
+          <div className="sideBarLayout"></div>
+        )}
       </div>
     </>
   );
