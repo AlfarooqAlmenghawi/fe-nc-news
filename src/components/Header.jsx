@@ -72,10 +72,14 @@ function Header() {
           <div className="sideBarLayout">
             <nav className="sideBar">
               <div className="sideBarLink">
-                <Link to="/">Home</Link>
+                <Link className="link" to="/">
+                  Home
+                </Link>
               </div>
               <div className="sideBarLink">
-                <Link to="/topics">Topics</Link>
+                <Link className="link" to="/topics">
+                  Topics
+                </Link>
               </div>
             </nav>
           </div>

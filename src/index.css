@@ -21,6 +21,15 @@
   max-width: 100%;
 }
 
+.link {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #2980b9;
+}
+
 .current-page-label {
   font-family: "Aku&Kamu", sans-serif;
   font-weight: 500;
