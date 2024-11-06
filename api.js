@@ -33,4 +33,36 @@ function getCommentsOfSpecificArticle(ARTICLE_ID) {
   });
 }
 
-export { getArticles, getArticleByID, getCommentsOfSpecificArticle };
+function upvoteSpecificArticle(ARTICLE_ID) {
+  const apiClient = axios.create({
+    baseURL: "https://nc-news-uocp.onrender.com/api/",
+    timeout: 3000,
+  });
+
+  return apiClient
+    .patch(`/articles/${ARTICLE_ID}`, {
+      inc_votes: 1,
+    })
+    .then((response) => {});
+}
+
+function downvoteSpecificArticle(ARTICLE_ID) {
+  const apiClient = axios.create({
+    baseURL: "https://nc-news-uocp.onrender.com/api/",
+    timeout: 3000,
+  });
+
+  return apiClient
+    .patch(`/articles/${ARTICLE_ID}`, {
+      inc_votes: -1,
+    })
+    .then((response) => {});
+}
+
+export {
+  getArticles,
+  getArticleByID,
+  getCommentsOfSpecificArticle,
+  upvoteSpecificArticle,
+  downvoteSpecificArticle,
+};
