@@ -11,6 +11,17 @@ function getArticles() {
   });
 }
 
+function getUsers() {
+  const apiClient = axios.create({
+    baseURL: "https://nc-news-uocp.onrender.com/api/",
+    timeout: 10000,
+  });
+
+  return apiClient.get("/users").then((response) => {
+    return response;
+  });
+}
+
 function getArticleByID(ARTICLE_ID) {
   const apiClient = axios.create({
     baseURL: "https://nc-news-uocp.onrender.com/api/",
@@ -61,6 +72,7 @@ function downvoteSpecificArticle(ARTICLE_ID) {
 
 export {
   getArticles,
+  getUsers,
   getArticleByID,
   getCommentsOfSpecificArticle,
   upvoteSpecificArticle,

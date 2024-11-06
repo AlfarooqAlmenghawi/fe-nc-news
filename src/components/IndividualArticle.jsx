@@ -8,6 +8,7 @@ import {
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { CurrentPageLabelContext } from "../contexts/CurrentPageLabel.jsx";
+import { CurrentUserContext } from "../contexts/User.jsx";
 
 // {/* <p>Individual Article here, article is {article.title}</p>; */}
 
@@ -15,6 +16,7 @@ function IndividualArticle() {
   const { currentPageLabel, setCurrentPageLabel } = useContext(
     CurrentPageLabelContext
   );
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 
   const [article, setArticle] = useState([]);
   const [commentsOfIndividualArticle, setCommentsOfIndividualArticle] =
@@ -29,7 +31,9 @@ function IndividualArticle() {
     setVotes((currentVotes) => currentVotes + 1);
     upvoteSpecificArticle(article_id)
       .then(() => {
-        console.log(`Successful, votes are now ${votes + 1}`);
+        console.log(
+          `Successful, votes are now ${votes + 1}. Upvoted by ${currentUser}`
+        );
         setErrorOnScreen("");
       })
       .catch((error) => {
@@ -42,13 +46,21 @@ function IndividualArticle() {
     setVotes((currentVotes) => currentVotes - 1);
     downvoteSpecificArticle(article_id)
       .then(() => {
-        console.log(`Successful, votes are now ${votes - 1}`);
+        console.log(
+          `Successful, votes are now ${votes - 1}. Downvoted by ${
+            currentUser.username
+          } (${currentUser.name})`
+        );
         setErrorOnScreen("");
       })
       .catch((error) => {
         setErrorOnScreen("Error Downvoting, couldn't connect to server");
         setVotes((currentVotes) => currentVotes + 1);
       });
+  }
+
+  function postComment(event) {
+    event.preventDefault();
   }
 
   useEffect(() => {
@@ -100,6 +112,24 @@ function IndividualArticle() {
           </div>
         </div>
         <div className="full-individual-article-comments">
+          {currentUser ? (
+            <form className="commenting-wrap">
+              <input
+                className="commenting-input"
+                placeholder={`Say something, ${currentUser.name}!`}
+              ></input>
+              <button
+                onClick={postComment}
+                type="submit"
+                className="commenting-post-button"
+              >
+                POST COMMENT
+              </button>
+            </form>
+          ) : (
+            <p>Please Log In.</p>
+          )}
+
           <div className="entire-comments-of-full-individual-article">
             <p>Comments:</p>
             {commentsOfIndividualArticle.map((comment) => {

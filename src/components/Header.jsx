@@ -1,12 +1,25 @@
 import { Link } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
 import { useContext, useState } from "react";
 import { CurrentPageLabelContext } from "../contexts/CurrentPageLabel.jsx";
+import { CurrentUserContext } from "../contexts/User.jsx";
 
 function Header() {
   const currentPageLabel = useContext(CurrentPageLabelContext);
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
   const [showMenuBar, setShowMenuBar] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
   let playing = false;
+
+  console.log(currentUser);
+
+  const isAuthenticationRoute = location.pathname.includes("/authentication");
+
+  function navigateToSignIn() {
+    console.log("Button clicked");
+    navigate(`/authentication`);
+  }
 
   function test() {
     setShowMenuBar(!showMenuBar);
@@ -28,7 +41,32 @@ function Header() {
             src="../../images/icon_small.png"
           />
           <h1 className="website-title">Articles and News</h1>
-          <button className="sign-in-button">Sign In/Create An Account</button>
+          {currentUser ? (
+            <div class="signed-in">
+              <div class="user-image">
+                <img class="user-image" src={currentUser.avatar_url} />
+              </div>
+              <div class="user-title">
+                <p>{currentUser.username}</p>
+              </div>
+            </div>
+          ) : isAuthenticationRoute ? (
+            <button
+              onClick={navigateToSignIn}
+              className="sign-in-button-dissapear"
+              disabled
+            >
+              Sign In
+            </button>
+          ) : (
+            <button
+              onClick={navigateToSignIn}
+              className="sign-in-button"
+              enabled
+            >
+              Sign In
+            </button>
+          )}
         </div>
         {showMenuBar ? (
           <div className="sideBarLayout">
