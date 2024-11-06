@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { getArticleByID, getCommentsOfSpecificArticle } from "../../api.js";
+import {
+  getArticleByID,
+  getCommentsOfSpecificArticle,
+  upvoteSpecificArticle,
+  downvoteSpecificArticle,
+} from "../../api.js";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { CurrentPageLabelContext } from "../contexts/CurrentPageLabel.jsx";
@@ -14,21 +19,50 @@ function IndividualArticle() {
   const [article, setArticle] = useState([]);
   const [commentsOfIndividualArticle, setCommentsOfIndividualArticle] =
     useState([]);
+  const [votes, setVotes] = useState(0);
+  const [errorOnScreen, setErrorOnScreen] = useState("");
   const { article_id } = useParams();
 
   setCurrentPageLabel(article.title);
 
+  function handleUpvote() {
+    setVotes((currentVotes) => currentVotes + 1);
+    upvoteSpecificArticle(article_id)
+      .then(() => {
+        console.log(`Successful, votes are now ${votes + 1}`);
+        setErrorOnScreen("");
+      })
+      .catch((error) => {
+        setErrorOnScreen("Error Upvoting, couldn't connect to server");
+        setVotes((currentVotes) => currentVotes - 1);
+      });
+  }
+
+  function handleDownvote() {
+    setVotes((currentVotes) => currentVotes - 1);
+    downvoteSpecificArticle(article_id)
+      .then(() => {
+        console.log(`Successful, votes are now ${votes - 1}`);
+        setErrorOnScreen("");
+      })
+      .catch((error) => {
+        setErrorOnScreen("Error Downvoting, couldn't connect to server");
+        setVotes((currentVotes) => currentVotes + 1);
+      });
+  }
+
   useEffect(() => {
     getArticleByID(article_id).then((response) => {
-      //
-      console.log(response.data.article);
       setArticle(response.data.article[0]);
+      setVotes(response.data.article[0].votes);
     });
     getCommentsOfSpecificArticle(article_id).then((response) => {
-      console.log(response.data.commentsOfThisArticle);
       setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
     });
   }, []);
+
+  const articleDate = new Date(article.created_at);
+  const formatArticleDate = articleDate.toLocaleString();
 
   return (
     <>
@@ -50,9 +84,16 @@ function IndividualArticle() {
           </div>
           <p className="full-individual-article-text">{article.body}</p>
 
+          <div className="voting">
+            <button onClick={handleUpvote}>🔼</button>
+            <p>{votes}</p>
+            <button onClick={handleDownvote}>🔽</button>
+            <p>{errorOnScreen}</p>
+          </div>
+
           <div className="full-individual-article-metadata">
             <p>
-              This article was made by {article.author} at {article.created_at}.
+              This article was made by {article.author} at {formatArticleDate}.
               It has {article.votes} upvotes and {article.comment_count}{" "}
               comments.
             </p>
@@ -62,11 +103,13 @@ function IndividualArticle() {
           <div className="entire-comments-of-full-individual-article">
             <p>Comments:</p>
             {commentsOfIndividualArticle.map((comment) => {
+              const commentDate = new Date(comment.created_at);
+              const formatCommentDate = commentDate.toLocaleString();
               return (
                 <div className="individual-comment">
                   <p>Comment: {comment.body}</p>
                   <p>
-                    By: {comment.author} at {comment.created_at}
+                    By: {comment.author} at {formatCommentDate}
                   </p>
                   <p>Upvotes: {comment.votes}</p>
                 </div>

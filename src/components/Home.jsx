@@ -21,7 +21,6 @@ function Home() {
 
   useEffect(() => {
     getArticles().then((response) => {
-      console.log(response.data.articlesWithTotalComments);
       setArticles(response.data.articlesWithTotalComments);
     });
   }, []);
@@ -33,6 +32,8 @@ function Home() {
       <h2 className="current-page-label">{currentPageLabel}</h2>
       <div className="all-the-articles">
         {articles.map((article) => {
+          const articleDate = new Date(article.created_at);
+          const formatArticleDate = articleDate.toLocaleString();
           return (
             <>
               <div
@@ -48,7 +49,7 @@ function Home() {
                 <div className="article-info">
                   <h3 class="article-title">{article.title}</h3>
                   <p class="article-text">Author: {article.author}</p>
-                  <p class="article-text">Created: {article.created_at}</p>
+                  <p class="article-text">Created: {formatArticleDate}</p>
                   <p class="article-text">Topic: {article.topic}</p>
                   <p class="article-text">Upvotes: {article.votes}</p>
                   <p class="article-text">Comments: {article.comment_count}</p>
