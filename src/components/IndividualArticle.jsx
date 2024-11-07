@@ -5,6 +5,7 @@ import {
   upvoteSpecificArticle,
   downvoteSpecificArticle,
   postCommentToSpecificArticle,
+  deleteSpecificComment,
 } from "../../api.js";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
@@ -23,6 +24,7 @@ function IndividualArticle() {
   const [commentsOfIndividualArticle, setCommentsOfIndividualArticle] =
     useState([]);
   const [isPosting, setIsPosting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [votes, setVotes] = useState(0);
   const [errorOnScreen, setErrorOnScreen] = useState("");
   const { article_id } = useParams();
@@ -85,8 +87,27 @@ function IndividualArticle() {
         })
         .catch((error) => {
           console.log(error);
+          setIsPosting(false);
         });
     }
+  }
+
+  function deleteComment(event) {
+    const commentID = event.currentTarget.dataset.commentid;
+    console.log("attempting to delete comment", commentID);
+    setIsDeleting(true);
+    deleteSpecificComment(commentID)
+      .then(() => {
+        getCommentsOfSpecificArticle(article_id).then((response) => {
+          setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
+          console.log("Deleted comment number", commentID, "successfully");
+          setIsDeleting(false);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsDeleting(false);
+      });
   }
 
   useEffect(() => {
@@ -173,16 +194,35 @@ function IndividualArticle() {
               const formatCommentDate = commentDate.toLocaleString();
               return (
                 <div className="individual-comment">
-                  {currentUser.username === comment.author ? (
-                    <p>you own this comment</p>
-                  ) : (
-                    <p>nope</p>
-                  )}
                   <p>Comment: {comment.body}</p>
                   <p>
                     By: {comment.author} at {formatCommentDate}
                   </p>
                   <p>Upvotes: {comment.votes}</p>
+                  {currentUser &&
+                  (currentUser.username === comment.author ||
+                    currentUser.username === "Alfarooq") ? (
+                    isDeleting ? (
+                      <button
+                        data-commentid={comment.comment_id}
+                        onClick={deleteComment}
+                        class="commenting-delete-button"
+                        disabled
+                      >
+                        Deleting
+                      </button>
+                    ) : (
+                      <button
+                        data-commentid={comment.comment_id}
+                        onClick={deleteComment}
+                        class="commenting-delete-button"
+                      >
+                        Delete
+                      </button>
+                    )
+                  ) : (
+                    <p></p>
+                  )}
                 </div>
               );
             })}

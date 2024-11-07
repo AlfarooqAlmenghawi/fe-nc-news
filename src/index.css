@@ -216,6 +216,22 @@
   height: 20%;
 }
 
+.commenting-delete-button {
+  font-family: "Aku&Kamu", sans-serif;
+  font-weight: 500;
+  background-color: wheat;
+  border: 1px dashed;
+  cursor: pointer;
+  width: 60%;
+  height: 20%;
+  padding: 10px;
+  margin: 5px;
+}
+
+.commenting-delete-button:hover {
+  opacity: 0.6;
+}
+
 .comments-label {
   margin-top: 50px;
 }
@@ -225,7 +241,8 @@
 }
 
 .individual-comment {
-  border: 1px solid;
+  border: 1px dashed;
+  border-color: rgb(0, 0, 0);
 }
 
 .full-individual-article-text {
