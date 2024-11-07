@@ -12,7 +12,7 @@ function Authentication() {
   const [users, setUsers] = useState([]);
 
   function handleUserClick(event) {
-    console.log(event.currentTarget.dataset);
+    console.log(event.currentTarget.dataset.username);
     setCurrentUser(event.currentTarget.dataset);
   }
 
@@ -35,17 +35,30 @@ function Authentication() {
           return (
             <div className="individual-user">
               <img className="individual-user-image" src={user.avatar_url} />
-              <p>Display Name: {user.username}</p>
+              <p>Username: {user.username}</p>
               <p>Name: {user.name}</p>
-              <button
-                data-username={user.username}
-                data-name={user.name}
-                data-avatar_url={user.avatar_url}
-                onClick={handleUserClick}
-                class="user-sign-in-button"
-              >
-                Sign In
-              </button>
+              {currentUser && currentUser.username === user.username ? (
+                <button
+                  data-username={user.username}
+                  data-name={user.name}
+                  data-avatar_url={user.avatar_url}
+                  onClick={handleUserClick}
+                  class="user-signed-in-button"
+                  disabled
+                >
+                  Signed In
+                </button>
+              ) : (
+                <button
+                  data-username={user.username}
+                  data-name={user.name}
+                  data-avatar_url={user.avatar_url}
+                  onClick={handleUserClick}
+                  class="user-sign-in-button"
+                >
+                  Sign In
+                </button>
+              )}
             </div>
           );
         })}

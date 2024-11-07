@@ -46,8 +46,9 @@ function Header() {
               <div class="user-image">
                 <img class="user-image" src={currentUser.avatar_url} />
               </div>
-              <div class="user-title">
-                <p>{currentUser.username}</p>
+              <div>
+                <p class="user-title">{currentUser.username}</p>
+                <p class="user-full-name">({currentUser.name})</p>
               </div>
             </div>
           ) : isAuthenticationRoute ? (
