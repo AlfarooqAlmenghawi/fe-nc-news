@@ -89,6 +89,22 @@ function postCommentToSpecificArticle(ARTICLE_ID, COMMENT, USER) {
     });
 }
 
+function deleteSpecificComment(COMMENT_ID) {
+  const apiClient = axios.create({
+    baseURL: "https://nc-news-uocp.onrender.com/api/",
+    timeout: 3000,
+  });
+
+  return apiClient
+    .delete(`/comments/${COMMENT_ID}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 export {
   getArticles,
   getUsers,
@@ -97,4 +113,5 @@ export {
   upvoteSpecificArticle,
   downvoteSpecificArticle,
   postCommentToSpecificArticle,
+  deleteSpecificComment,
 };
