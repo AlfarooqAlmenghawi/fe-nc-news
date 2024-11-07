@@ -70,6 +70,25 @@ function downvoteSpecificArticle(ARTICLE_ID) {
     .then((response) => {});
 }
 
+function postCommentToSpecificArticle(ARTICLE_ID, COMMENT, USER) {
+  const apiClient = axios.create({
+    baseURL: "https://nc-news-uocp.onrender.com/api/",
+    timeout: 3000,
+  });
+
+  return apiClient
+    .post(`/articles/${ARTICLE_ID}/comments`, {
+      username: USER,
+      comment: COMMENT,
+    })
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.log(USER);
+    });
+}
+
 export {
   getArticles,
   getUsers,
@@ -77,4 +96,5 @@ export {
   getCommentsOfSpecificArticle,
   upvoteSpecificArticle,
   downvoteSpecificArticle,
+  postCommentToSpecificArticle,
 };
