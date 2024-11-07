@@ -173,6 +173,11 @@ function IndividualArticle() {
               const formatCommentDate = commentDate.toLocaleString();
               return (
                 <div className="individual-comment">
+                  {currentUser.username === comment.author ? (
+                    <p>you own this comment</p>
+                  ) : (
+                    <p>nope</p>
+                  )}
                   <p>Comment: {comment.body}</p>
                   <p>
                     By: {comment.author} at {formatCommentDate}
