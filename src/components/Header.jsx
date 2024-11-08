@@ -76,6 +76,11 @@ function Header() {
                 </Link>
               </div>
               <div className="sideBarLink">
+                <Link className="link" to="/articles">
+                  Articles
+                </Link>
+              </div>
+              <div className="sideBarLink">
                 <Link className="link" to="/topics">
                   Topics
                 </Link>

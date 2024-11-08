@@ -1,23 +1,63 @@
 import axios from "axios";
 
-function getArticles() {
+function getArticles(QUERIES) {
   const apiClient = axios.create({
     baseURL: "https://nc-news-uocp.onrender.com/api/",
     timeout: 10000,
   });
 
-  return apiClient.get("/articles").then((response) => {
+  let endpoint = "";
+
+  console.log(QUERIES);
+
+  if (QUERIES.sort_by && QUERIES.order) {
+    console.log(`/articles?sort_by=${QUERIES.sort_by}&order=${QUERIES.order}`);
+    endpoint = `/articles?sort_by=${QUERIES.sort_by}&order=${QUERIES.order}`;
+  } else if (QUERIES.sort_by && !QUERIES.order) {
+    console.log(`/articles?sort_by=${QUERIES.sort_by}`);
+    endpoint = `/articles?sort_by=${QUERIES.sort_by}`;
+  } else if (QUERIES.order && !QUERIES.sort_by) {
+    console.log(`/articles?order=${QUERIES.order}`);
+    endpoint = `/articles?order=${QUERIES.order}`;
+  } else {
+    endpoint = "/articles";
+  }
+
+  console.warn("The endpoint is", endpoint);
+
+  return apiClient.get(endpoint).then((response) => {
     return response;
   });
 }
 
-function getArticlesByTopic(TOPIC) {
+function getArticlesByTopic(TOPIC, QUERIES) {
   const apiClient = axios.create({
     baseURL: "https://nc-news-uocp.onrender.com/api/",
     timeout: 10000,
   });
 
-  return apiClient.get(`/articles?topic=${TOPIC}`).then((response) => {
+  let endpoint = "";
+
+  console.log(QUERIES);
+
+  if (QUERIES.sort_by && QUERIES.order) {
+    console.log(
+      `/articles?topic=${TOPIC}&sort_by=${QUERIES.sort_by}&order=${QUERIES.order}`
+    );
+    endpoint = `/articles?topic=${TOPIC}&sort_by=${QUERIES.sort_by}&order=${QUERIES.order}`;
+  } else if (QUERIES.sort_by && !QUERIES.order) {
+    console.log(`/articles?topic=${TOPIC}&sort_by=${QUERIES.sort_by}`);
+    endpoint = `/articles?topic=${TOPIC}&sort_by=${QUERIES.sort_by}`;
+  } else if (QUERIES.order && !QUERIES.sort_by) {
+    console.log(`/articles?topic=${TOPIC}&order=${QUERIES.order}`);
+    endpoint = `/articles?topic=${TOPIC}&order=${QUERIES.order}`;
+  } else {
+    endpoint = "/articles";
+  }
+
+  console.warn("The endpoint is", endpoint);
+
+  return apiClient.get(endpoint).then((response) => {
     return response;
   });
 }
