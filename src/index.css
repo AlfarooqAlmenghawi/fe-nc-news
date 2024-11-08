@@ -156,6 +156,31 @@
   font-weight: 500;
 }
 
+@media screen and (max-width: 500px) {
+  .all-the-articles {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .individual-article {
+    border: 1px dashed;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .individual-article:hover {
+    opacity: 0.6;
+  }
+
+  .individual-article-image {
+    text-align: center;
+    margin-left: 4em;
+    margin-right: 4em;
+  }
+}
+
 .full-individual-article {
   display: flex;
   flex-wrap: nowrap;
