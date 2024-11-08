@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { getArticlesByTopic } from "../../api.js";
 
 function ArticlesByTopic() {
+  const [queries, setQueries] = useState({});
   const { currentPageLabel, setCurrentPageLabel } = useContext(
     CurrentPageLabelContext
   );
@@ -21,8 +22,57 @@ function ArticlesByTopic() {
     navigate(`/articles/${articleID}`);
   }
 
+  function handleStatsSortingChange(event) {
+    const sortByQuery = event.target.value;
+
+    switch (sortByQuery) {
+      case "None":
+        delete queries.sort_by;
+        break;
+      case "Date":
+        queries.sort_by = "created_at";
+        break;
+      case "Comment Count":
+        queries.sort_by = "comment_count";
+        break;
+      case "Votes":
+        queries.sort_by = "votes";
+        break;
+    }
+
+    console.log(queries, "in ArticlesByTopic.jsx");
+
+    getArticlesByTopic(topic, queries).then((response) => {
+      console.log(response);
+      setArticlesByTopic(response.data.articlesWithTotalComments);
+    });
+  }
+
+  function handleOrderSortingChange(event) {
+    const orderQuery = event.target.value;
+
+    switch (orderQuery) {
+      case "None":
+        delete queries.order;
+        break;
+      case "Ascending":
+        queries.order = "asc";
+        break;
+      case "Descending":
+        queries.order = "desc";
+        break;
+    }
+
+    console.log(queries, "in ArticlesByTopic.jsx");
+
+    getArticlesByTopic(topic, queries).then((response) => {
+      console.log(response);
+      setArticlesByTopic(response.data.articlesWithTotalComments);
+    });
+  }
+
   useEffect(() => {
-    getArticlesByTopic(topic).then((response) => {
+    getArticlesByTopic(topic, queries).then((response) => {
       console.log(response);
       setArticlesByTopic(response.data.articlesWithTotalComments);
     });
@@ -33,6 +83,17 @@ function ArticlesByTopic() {
   return (
     <>
       <h2 className="current-page-label">{currentPageLabel}</h2>
+      <select onChange={handleStatsSortingChange}>
+        <option>None</option>
+        <option>Date</option>
+        <option>Comment Count</option>
+        <option>Votes</option>
+      </select>
+      <select onChange={handleOrderSortingChange}>
+        <option>None</option>
+        <option>Ascending</option>
+        <option>Descending</option>
+      </select>
       <div className="all-the-articles">
         {articlesByTopic.map((article) => {
           const articleDate = new Date(article.created_at);
