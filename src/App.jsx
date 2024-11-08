@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import Topics from "./components/Topics";
 import Authentication from "./components/Authentication";
 import IndividualArticle from "./components/IndividualArticle";
+import ArticlesByTopic from "./components/ArticlesByTopic";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
                 element={<IndividualArticle />}
               />
               <Route path="/authentication" element={<Authentication />} />
+              <Route path="/topics/:topic" element={<ArticlesByTopic />} />
             </Routes>
           </CurrentUserProvider>
         </CurrentPageLabelProvider>

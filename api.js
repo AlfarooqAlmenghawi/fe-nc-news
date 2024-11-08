@@ -11,6 +11,17 @@ function getArticles() {
   });
 }
 
+function getArticlesByTopic(TOPIC) {
+  const apiClient = axios.create({
+    baseURL: "https://nc-news-uocp.onrender.com/api/",
+    timeout: 10000,
+  });
+
+  return apiClient.get(`/articles?topic=${TOPIC}`).then((response) => {
+    return response;
+  });
+}
+
 function getUsers() {
   const apiClient = axios.create({
     baseURL: "https://nc-news-uocp.onrender.com/api/",
@@ -18,6 +29,17 @@ function getUsers() {
   });
 
   return apiClient.get("/users").then((response) => {
+    return response;
+  });
+}
+
+function getTopics() {
+  const apiClient = axios.create({
+    baseURL: "https://nc-news-uocp.onrender.com/api/",
+    timeout: 10000,
+  });
+
+  return apiClient.get("/topics").then((response) => {
     return response;
   });
 }
@@ -107,7 +129,9 @@ function deleteSpecificComment(COMMENT_ID) {
 
 export {
   getArticles,
+  getArticlesByTopic,
   getUsers,
+  getTopics,
   getArticleByID,
   getCommentsOfSpecificArticle,
   upvoteSpecificArticle,

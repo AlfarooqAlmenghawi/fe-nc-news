@@ -12,8 +12,6 @@ function Header() {
   const location = useLocation();
   let playing = false;
 
-  console.log(currentUser);
-
   const isAuthenticationRoute = location.pathname.includes("/authentication");
 
   function navigateToSignIn() {

@@ -38,7 +38,9 @@ function IndividualArticle() {
     upvoteSpecificArticle(article_id)
       .then(() => {
         console.log(
-          `Successful, votes are now ${votes + 1}. Upvoted by ${currentUser}`
+          `Successful, votes are now ${votes + 1}. Upvoted by ${
+            currentUser.username
+          } (${currentUser.name})`
         );
         setErrorOnScreen("");
       })
