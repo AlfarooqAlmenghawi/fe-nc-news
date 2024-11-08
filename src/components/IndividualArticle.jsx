@@ -27,11 +27,12 @@ function IndividualArticle() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [votes, setVotes] = useState(0);
   const [errorOnScreen, setErrorOnScreen] = useState("");
+  const [commentErrorOnScreen, setCommentErrorOnScreen] = useState("");
   const { article_id } = useParams();
 
   const [currentInput, setCurrentInput] = useState("");
 
-  setCurrentPageLabel(article.title);
+  // setCurrentPageLabel(article.title);
 
   function handleUpvote() {
     setVotes((currentVotes) => currentVotes + 1);
@@ -72,6 +73,7 @@ function IndividualArticle() {
     setIsPosting(true);
     if (currentInput === "") {
       console.log("Write something first please");
+      setCommentErrorOnScreen("Comment cannot be empty");
       setIsPosting(false);
     } else {
       console.log("Attempting to post comment", currentInput);
@@ -85,10 +87,12 @@ function IndividualArticle() {
             setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
           });
           console.log(response);
+          setCommentErrorOnScreen("");
           setIsPosting(false);
         })
         .catch((error) => {
           console.log(error);
+          setCommentErrorOnScreen("Error");
           setIsPosting(false);
         });
     }
@@ -113,13 +117,25 @@ function IndividualArticle() {
   }
 
   useEffect(() => {
-    getArticleByID(article_id).then((response) => {
-      setArticle(response.data.article[0]);
-      setVotes(response.data.article[0].votes);
-    });
-    getCommentsOfSpecificArticle(article_id).then((response) => {
-      setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
-    });
+    getArticleByID(article_id)
+      .then((response) => {
+        setArticle(response.data.article[0]);
+        setVotes(response.data.article[0].votes);
+        setCurrentPageLabel(response.data.article[0].title);
+      })
+      .catch((error) => {
+        console.log(error.status);
+        setArticle([]);
+        setCurrentPageLabel("Article doesn't seem to exist");
+      });
+    getCommentsOfSpecificArticle(article_id)
+      .then((response) => {
+        setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
+      })
+      .catch((error) => {
+        console.log(error);
+        setCommentsOfIndividualArticle([]);
+      });
   }, []);
 
   const articleDate = new Date(article.created_at);
@@ -132,105 +148,109 @@ function IndividualArticle() {
       ) : (
         <h2 className="current-page-label">Loading...</h2>
       )}
-      <div className="full-individual-article">
-        <div className="full-individual-article-itself">
-          <div className="full-individual-article-things-to-center">
-            <img
-              className="full-individual-article-image"
-              src={article.article_img_url}
-            />
-            <p className="full-individual-article-topic">
-              Topic: {article.topic}
-            </p>
-          </div>
-          <p className="full-individual-article-text">{article.body}</p>
+      {article.length !== 0 ? (
+        <div className="full-individual-article">
+          <div className="full-individual-article-itself">
+            <div className="full-individual-article-things-to-center">
+              <img
+                className="full-individual-article-image"
+                src={article.article_img_url}
+              />
+              <p className="full-individual-article-topic">
+                Topic: {article.topic}
+              </p>
+            </div>
+            <p className="full-individual-article-text">{article.body}</p>
 
-          <div className="voting">
-            <button onClick={handleUpvote}>🔼</button>
-            <p>{votes}</p>
-            <button onClick={handleDownvote}>🔽</button>
-            <p>{errorOnScreen}</p>
-          </div>
+            <div className="voting">
+              <button onClick={handleUpvote}>🔼</button>
+              <p>{votes}</p>
+              <button onClick={handleDownvote}>🔽</button>
+              <p>{errorOnScreen}</p>
+            </div>
 
-          <div className="full-individual-article-metadata">
-            <p>
-              This article was made by {article.author} at {formatArticleDate}.
-              It has {article.votes} upvotes and {article.comment_count}{" "}
-              comments.
-            </p>
+            <div className="full-individual-article-metadata">
+              <p>
+                This article was made by {article.author} at {formatArticleDate}
+                . It has {article.votes} upvotes and {article.comment_count}{" "}
+                comments.
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="full-individual-article-comments">
-          {currentUser ? (
-            <form onSubmit={postComment} className="commenting-wrap">
-              <textarea
-                onChange={(event) => {
-                  console.log(event.target.value);
-                  setCurrentInput(event.target.value);
-                }}
-                className="commenting-input"
-                placeholder={`Say something, ${currentUser.name}!`}
-              ></textarea>
-              {isPosting ? (
-                <button
-                  type="submit"
-                  className="commenting-post-button"
-                  disabled
-                >
-                  POSTING
-                </button>
-              ) : (
-                <button type="submit" className="commenting-post-button">
-                  POST COMMENT
-                </button>
-              )}
-            </form>
-          ) : (
-            <p>Please Log In.</p>
-          )}
-
-          <div className="entire-comments-of-full-individual-article">
-            <p class="comments-label">Comments:</p>
-            {commentsOfIndividualArticle.map((comment) => {
-              const commentDate = new Date(comment.created_at);
-              const formatCommentDate = commentDate.toLocaleString();
-              return (
-                <div className="individual-comment">
-                  <p>Comment: {comment.body}</p>
-                  <p>
-                    By: {comment.author} at {formatCommentDate}
-                  </p>
-                  <p>Upvotes: {comment.votes}</p>
-                  {currentUser &&
-                  (currentUser.username === comment.author ||
-                    currentUser.username === "Alfarooq") ? (
-                    isDeleting ? (
-                      <button
-                        data-commentid={comment.comment_id}
-                        onClick={deleteComment}
-                        class="commenting-delete-button"
-                        disabled
-                      >
-                        Deleting
-                      </button>
+          <div className="full-individual-article-comments">
+            {currentUser ? (
+              <form onSubmit={postComment} className="commenting-wrap">
+                <textarea
+                  onChange={(event) => {
+                    console.log(event.target.value);
+                    setCurrentInput(event.target.value);
+                  }}
+                  className="commenting-input"
+                  placeholder={`Say something, ${currentUser.name}!`}
+                ></textarea>
+                {isPosting ? (
+                  <button
+                    type="submit"
+                    className="commenting-post-button"
+                    disabled
+                  >
+                    POSTING
+                  </button>
+                ) : (
+                  <button type="submit" className="commenting-post-button">
+                    POST COMMENT
+                  </button>
+                )}
+              </form>
+            ) : (
+              <p>Please Log In.</p>
+            )}
+            <p>{commentErrorOnScreen}</p>
+            <div className="entire-comments-of-full-individual-article">
+              <p class="comments-label">Comments:</p>
+              {commentsOfIndividualArticle.map((comment) => {
+                const commentDate = new Date(comment.created_at);
+                const formatCommentDate = commentDate.toLocaleString();
+                return (
+                  <div className="individual-comment">
+                    <p>Comment: {comment.body}</p>
+                    <p>
+                      By: {comment.author} at {formatCommentDate}
+                    </p>
+                    <p>Upvotes: {comment.votes}</p>
+                    {currentUser &&
+                    (currentUser.username === comment.author ||
+                      currentUser.username === "Alfarooq") ? (
+                      isDeleting ? (
+                        <button
+                          data-commentid={comment.comment_id}
+                          onClick={deleteComment}
+                          class="commenting-delete-button"
+                          disabled
+                        >
+                          Deleting
+                        </button>
+                      ) : (
+                        <button
+                          data-commentid={comment.comment_id}
+                          onClick={deleteComment}
+                          class="commenting-delete-button"
+                        >
+                          Delete
+                        </button>
+                      )
                     ) : (
-                      <button
-                        data-commentid={comment.comment_id}
-                        onClick={deleteComment}
-                        class="commenting-delete-button"
-                      >
-                        Delete
-                      </button>
-                    )
-                  ) : (
-                    <p></p>
-                  )}
-                </div>
-              );
-            })}
+                      <p></p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <p></p>
+      )}
     </>
   );
 }
