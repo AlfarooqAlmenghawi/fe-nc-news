@@ -52,7 +52,7 @@ function getArticlesByTopic(TOPIC, QUERIES) {
     console.log(`/articles?topic=${TOPIC}&order=${QUERIES.order}`);
     endpoint = `/articles?topic=${TOPIC}&order=${QUERIES.order}`;
   } else {
-    endpoint = "/articles";
+    endpoint = `/articles?topic=${TOPIC}`;
   }
 
   console.warn("The endpoint is", endpoint);

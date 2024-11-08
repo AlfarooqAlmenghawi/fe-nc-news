@@ -8,6 +8,7 @@ import Topics from "./components/Topics";
 import Authentication from "./components/Authentication";
 import IndividualArticle from "./components/IndividualArticle";
 import ArticlesByTopic from "./components/ArticlesByTopic";
+import InvalidEndPoint from "./components/InvalidEndPoint";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               />
               <Route path="/authentication" element={<Authentication />} />
               <Route path="/topics/:topic" element={<ArticlesByTopic />} />
+              <Route path="*" element={<InvalidEndPoint />} />
             </Routes>
           </CurrentUserProvider>
         </CurrentPageLabelProvider>

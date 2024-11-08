@@ -15,6 +15,8 @@ function ArticlesByTopic() {
 
   const { topic } = useParams();
 
+  // setCurrentPageLabel("Loading");
+
   function handleClick(event) {
     const articleName = event.currentTarget.dataset.articlename;
     const articleID = event.currentTarget.dataset.articleid;
@@ -72,17 +74,28 @@ function ArticlesByTopic() {
   }
 
   useEffect(() => {
-    getArticlesByTopic(topic, queries).then((response) => {
-      console.log(response);
-      setArticlesByTopic(response.data.articlesWithTotalComments);
-    });
+    getArticlesByTopic(topic, queries)
+      .then((response) => {
+        console.log(response);
+        setArticlesByTopic(response.data.articlesWithTotalComments);
+        setCurrentPageLabel("Articles related to " + topic);
+      })
+      .catch((error) => {
+        setCurrentPageLabel(
+          "there seems to be no Articles related to " + topic
+        );
+      });
   }, []);
 
-  setCurrentPageLabel("Topics related to " + topic);
+  // setCurrentPageLabel("Articles related to " + topic);
 
   return (
     <>
-      <h2 className="current-page-label">{currentPageLabel}</h2>
+      {currentPageLabel ? (
+        <h2 className="current-page-label">{currentPageLabel}</h2>
+      ) : (
+        <h2 className="current-page-label">Loading...</h2>
+      )}
       <select onChange={handleStatsSortingChange}>
         <option>None</option>
         <option>Date</option>
