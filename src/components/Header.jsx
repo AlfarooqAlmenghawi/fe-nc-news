@@ -36,7 +36,8 @@ function Header() {
             onClick={test}
             className="menu-icon"
             type="image"
-            src="../../images/icon_small.png"
+            src="/images/icon_small.png"
+            alt="Menu Icon"
           />
           <h1 className="website-title">Articles and News</h1>
           {currentUser ? (
