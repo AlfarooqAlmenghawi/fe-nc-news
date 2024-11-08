@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useContext, useState } from "react";
 import { CurrentPageLabelContext } from "../contexts/CurrentPageLabel.jsx";
 import { CurrentUserContext } from "../contexts/User.jsx";
+import menuIcon from "../../images/icon_small.png";
 
 function Header() {
   const currentPageLabel = useContext(CurrentPageLabelContext);
@@ -36,7 +37,7 @@ function Header() {
             onClick={test}
             className="menu-icon"
             type="image"
-            src="/images/icon_small.png"
+            src={menuIcon}
             alt="Menu Icon"
           />
           <h1 className="website-title">Articles and News</h1>
