@@ -8,16 +8,16 @@ function getArticles(QUERIES) {
 
   let endpoint = "";
 
-  console.log(QUERIES);
+  // console.log(QUERIES);
 
   if (QUERIES.sort_by && QUERIES.order) {
-    console.log(`/articles?sort_by=${QUERIES.sort_by}&order=${QUERIES.order}`);
+    // console.log(`/articles?sort_by=${QUERIES.sort_by}&order=${QUERIES.order}`);
     endpoint = `/articles?sort_by=${QUERIES.sort_by}&order=${QUERIES.order}`;
   } else if (QUERIES.sort_by && !QUERIES.order) {
-    console.log(`/articles?sort_by=${QUERIES.sort_by}`);
+    // console.log(`/articles?sort_by=${QUERIES.sort_by}`);
     endpoint = `/articles?sort_by=${QUERIES.sort_by}`;
   } else if (QUERIES.order && !QUERIES.sort_by) {
-    console.log(`/articles?order=${QUERIES.order}`);
+    // console.log(`/articles?order=${QUERIES.order}`);
     endpoint = `/articles?order=${QUERIES.order}`;
   } else {
     endpoint = "/articles";
@@ -38,18 +38,18 @@ function getArticlesByTopic(TOPIC, QUERIES) {
 
   let endpoint = "";
 
-  console.log(QUERIES);
+  // console.log(QUERIES);
 
   if (QUERIES.sort_by && QUERIES.order) {
-    console.log(
-      `/articles?topic=${TOPIC}&sort_by=${QUERIES.sort_by}&order=${QUERIES.order}`
-    );
+    // console.log(
+    //`/articles?topic=${TOPIC}&sort_by=${QUERIES.sort_by}&order=${QUERIES.order}`
+    //);
     endpoint = `/articles?topic=${TOPIC}&sort_by=${QUERIES.sort_by}&order=${QUERIES.order}`;
   } else if (QUERIES.sort_by && !QUERIES.order) {
-    console.log(`/articles?topic=${TOPIC}&sort_by=${QUERIES.sort_by}`);
+    // console.log(`/articles?topic=${TOPIC}&sort_by=${QUERIES.sort_by}`);
     endpoint = `/articles?topic=${TOPIC}&sort_by=${QUERIES.sort_by}`;
   } else if (QUERIES.order && !QUERIES.sort_by) {
-    console.log(`/articles?topic=${TOPIC}&order=${QUERIES.order}`);
+    // console.log(`/articles?topic=${TOPIC}&order=${QUERIES.order}`);
     endpoint = `/articles?topic=${TOPIC}&order=${QUERIES.order}`;
   } else {
     endpoint = `/articles?topic=${TOPIC}`;
@@ -147,7 +147,7 @@ function postCommentToSpecificArticle(ARTICLE_ID, COMMENT, USER) {
       return response;
     })
     .catch((error) => {
-      console.log(USER);
+      // console.log(USER);
     });
 }
 
@@ -163,7 +163,7 @@ function deleteSpecificComment(COMMENT_ID) {
       return response;
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
     });
 }
 

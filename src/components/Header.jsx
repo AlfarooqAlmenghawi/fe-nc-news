@@ -16,7 +16,7 @@ function Header() {
   const isAuthenticationRoute = location.pathname.includes("/authentication");
 
   function navigateToSignIn() {
-    console.log("Button clicked");
+    // console.log("Button clicked");
     navigate(`/authentication`);
   }
 

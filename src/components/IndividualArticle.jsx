@@ -39,11 +39,11 @@ function IndividualArticle() {
     setVotes((currentVotes) => currentVotes + 1);
     upvoteSpecificArticle(article_id)
       .then(() => {
-        console.log(
-          `Successful, votes are now ${votes + 1}. Upvoted by ${
-            currentUser.username
-          } (${currentUser.name})`
-        );
+        // console.log(
+        //   `Successful, votes are now ${votes + 1}. Upvoted by ${
+        //     currentUser.username
+        //   } (${currentUser.name})`
+        // );
         setErrorOnScreen("");
       })
       .catch((error) => {
@@ -56,11 +56,11 @@ function IndividualArticle() {
     setVotes((currentVotes) => currentVotes - 1);
     downvoteSpecificArticle(article_id)
       .then(() => {
-        console.log(
-          `Successful, votes are now ${votes - 1}. Downvoted by ${
-            currentUser.username
-          } (${currentUser.name})`
-        );
+        // // console.log(
+        //   `Successful, votes are now ${votes - 1}. Downvoted by ${
+        //     currentUser.username
+        //   } (${currentUser.name})`
+        // );
         setErrorOnScreen("");
       })
       .catch((error) => {
@@ -73,11 +73,11 @@ function IndividualArticle() {
     event.preventDefault();
     setIsPosting(true);
     if (currentInput === "") {
-      console.log("Write something first please");
+      // console.log("Write something first please");
       setCommentErrorOnScreen("Comment cannot be empty");
       setIsPosting(false);
     } else {
-      console.log("Attempting to post comment", currentInput);
+      // console.log("Attempting to post comment", currentInput);
       postCommentToSpecificArticle(
         article_id,
         currentInput,
@@ -87,13 +87,13 @@ function IndividualArticle() {
           getCommentsOfSpecificArticle(article_id).then((response) => {
             setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
           });
-          console.log(response);
+          // console.log(response);
           setCommentErrorOnScreen("");
           setTextBox("");
           setIsPosting(false);
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           setCommentErrorOnScreen("Error");
           setIsPosting(false);
         });
@@ -102,18 +102,18 @@ function IndividualArticle() {
 
   function deleteComment(event) {
     const commentID = event.currentTarget.dataset.commentid;
-    console.log("attempting to delete comment", commentID);
+    // console.log("attempting to delete comment", commentID);
     setIsDeleting(true);
     deleteSpecificComment(commentID)
       .then(() => {
         getCommentsOfSpecificArticle(article_id).then((response) => {
           setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
-          console.log("Deleted comment number", commentID, "successfully");
+          // console.log("Deleted comment number", commentID, "successfully");
           setIsDeleting(false);
         });
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         setIsDeleting(false);
       });
   }
@@ -126,7 +126,7 @@ function IndividualArticle() {
         setCurrentPageLabel(response.data.article[0].title);
       })
       .catch((error) => {
-        console.log(error.status);
+        // console.log(error.status);
         setArticle([]);
         setCurrentPageLabel("Article doesn't seem to exist");
       });
@@ -135,7 +135,7 @@ function IndividualArticle() {
         setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         setCommentsOfIndividualArticle([]);
       });
   }, []);
@@ -184,7 +184,7 @@ function IndividualArticle() {
               <form onSubmit={postComment} className="commenting-wrap">
                 <textarea
                   onChange={(event) => {
-                    console.log(event.target.value);
+                    // console.log(event.target.value);
                     setCurrentInput(event.target.value);
                   }}
                   className="commenting-input"

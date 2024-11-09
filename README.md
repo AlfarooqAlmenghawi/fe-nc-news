@@ -14,6 +14,8 @@ This app consists of a News Article viewing website with Articles, Topics (for f
 
 2. Run `git clone https://github.com/AlfarooqAlmenghawi/fe-nc-news` once you're in that directory.
 
-3. Run `npm run dev`. This will create a local hosted link for you to view in your browser, locally. I should function just how it does on the hosted URL.
+3. Run `npm install`. This will install all the libraries and dependencies to get the app up and running.
+
+4. Run `npm run dev`. This will create a local hosted link for you to view in your browser, locally. I should function just how it does on the hosted URL.
 
 This portfolio project was created as part of a Digital Skills Bootcamp in Software Engineering provided by [Northcoders](https://northcoders.com/)

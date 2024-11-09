@@ -13,7 +13,7 @@ function Topics() {
 
   function handleClick(event) {
     const topicName = event.currentTarget.dataset.topic;
-    console.log(`The ${topicName} topic clicked`);
+    // console.log(`The ${topicName} topic clicked`);
     navigate(`/topics/${topicName}`);
   }
 
