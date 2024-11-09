@@ -28,6 +28,7 @@ function IndividualArticle() {
   const [votes, setVotes] = useState(0);
   const [errorOnScreen, setErrorOnScreen] = useState("");
   const [commentErrorOnScreen, setCommentErrorOnScreen] = useState("");
+  const [textBox, setTextBox] = useState("");
   const { article_id } = useParams();
 
   const [currentInput, setCurrentInput] = useState("");
@@ -88,6 +89,7 @@ function IndividualArticle() {
           });
           console.log(response);
           setCommentErrorOnScreen("");
+          setTextBox("");
           setIsPosting(false);
         })
         .catch((error) => {
@@ -187,7 +189,9 @@ function IndividualArticle() {
                   }}
                   className="commenting-input"
                   placeholder={`Say something, ${currentUser.name}!`}
-                ></textarea>
+                >
+                  {textBox}
+                </textarea>
                 {isPosting ? (
                   <button
                     type="submit"

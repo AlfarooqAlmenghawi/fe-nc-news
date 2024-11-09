@@ -7,6 +7,7 @@
   font-family: "Aku&Kamu", sans-serif;
   font-weight: 500;
   margin: auto;
+  font-size: 2em;
 }
 
 .menu-icon {
@@ -31,15 +32,14 @@
   font-family: "Aku&Kamu", sans-serif;
   font-weight: 500;
   text-align: center;
-  margin: auto;
-  width: 60%;
+  width: auto;
 }
 
 .sign-in-button {
   font-family: "Aku&Kamu", sans-serif;
   font-weight: 500;
   font-size: 40px;
-  width: 200px;
+  width: 5em;
   cursor: pointer;
   background-color: white;
   border: 1px dashed;
@@ -154,31 +154,6 @@
   font-family: "Aku&Kamu", sans-serif;
   font-size: 0.8em;
   font-weight: 500;
-}
-
-@media screen and (max-width: 500px) {
-  .all-the-articles {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  .individual-article {
-    border: 1px dashed;
-    cursor: pointer;
-    width: 100%;
-  }
-
-  .individual-article:hover {
-    opacity: 0.6;
-  }
-
-  .individual-article-image {
-    text-align: center;
-    margin-left: 4em;
-    margin-right: 4em;
-  }
 }
 
 .full-individual-article {
@@ -404,4 +379,153 @@
 .topic-click-info {
   margin: 5px;
   opacity: 0.4;
+}
+
+@media screen and (min-width: 301px) and (max-width: 501px) {
+  .things-at-the-very-top {
+    display: flex;
+    height: 4em;
+  }
+
+  .website-title {
+    font-family: "Aku&Kamu", sans-serif;
+    font-weight: 500;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 2em;
+  }
+
+  .menu-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .all-the-articles {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .individual-article {
+    border: 1px dashed;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+  }
+
+  .individual-article:hover {
+    opacity: 0.6;
+  }
+
+  .individual-article-image {
+  }
+
+  .sign-in-button {
+    font-family: "Aku&Kamu", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    width: 5em;
+    cursor: pointer;
+    background-color: white;
+    border: 1px dashed;
+  }
+
+  .sideBar {
+    width: 5%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sideBarLayout {
+    width: 10px;
+    height: 40px;
+    gap: 50px;
+    width: auto;
+  }
+
+  .sideBarLink {
+    font-family: "Aku&Kamu", sans-serif;
+    font-weight: 500;
+    font-size: 0.7em;
+    padding: 5%;
+    width: 4em;
+    border: 1px dashed;
+    margin-bottom: 1px;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .things-at-the-very-top {
+    display: flex;
+    height: 2em;
+  }
+
+  .website-title {
+    font-family: "Aku&Kamu", sans-serif;
+    font-weight: 500;
+    height: 30px;
+    font-size: 1em;
+    text-align: center;
+  }
+
+  .menu-icon {
+    width: 25px;
+    height: 25px;
+  }
+
+  .all-the-articles {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .individual-article {
+    border: 1px dashed;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+  }
+
+  .individual-article:hover {
+    opacity: 0.6;
+  }
+
+  .individual-article-image {
+  }
+
+  .sign-in-button {
+    font-family: "Aku&Kamu", sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    width: 5em;
+    height: 2 em;
+    cursor: pointer;
+    background-color: white;
+    border: 1px dashed;
+  }
+
+  .sideBar {
+    width: 5%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sideBarLayout {
+    width: 10px;
+    height: 40px;
+    gap: 50px;
+    width: auto;
+  }
+
+  .sideBarLink {
+    font-family: "Aku&Kamu", sans-serif;
+    font-weight: 500;
+    font-size: 0.5em;
+    padding: 5%;
+    width: 4em;
+    border: 1px dashed;
+    margin-bottom: 1px;
+  }
 }
