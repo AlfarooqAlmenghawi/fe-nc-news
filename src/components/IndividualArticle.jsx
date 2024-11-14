@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { CurrentPageLabelContext } from "../contexts/CurrentPageLabel.jsx";
 import { CurrentUserContext } from "../contexts/User.jsx";
+import supabase from "../../supabaseClient.js";
 
 // {/* <p>Individual Article here, article is {article.title}</p>; */}
 
@@ -138,7 +139,23 @@ function IndividualArticle() {
         // console.log(error);
         setCommentsOfIndividualArticle([]);
       });
-  }, []);
+
+    const commentsSubscription = supabase
+      .from(`comments:article_id=eq.${article_id}`)
+      .on("*", (payload) => {
+        console.log("Change received!", payload);
+        // Refresh comments after any insert, update, or delete event
+        getCommentsOfSpecificArticle(article_id).then((response) => {
+          setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
+        });
+      })
+      .subscribe();
+
+    // Clean up the subscription when the component unmounts
+    return () => {
+      supabase.removeSubscription(commentsSubscription);
+    };
+  }, [article_id]);
 
   const articleDate = new Date(article.created_at);
   const formatArticleDate = articleDate.toLocaleString();
