@@ -140,16 +140,17 @@ function IndividualArticle() {
         setCommentsOfIndividualArticle([]);
       });
 
+    console.log("Supabase client:", supabase);
     const commentsSubscription = supabase
-      .from(`comments:article_id=eq.${article_id}`)
+      .from("comments")
       .on("*", (payload) => {
         console.log("Change received!", payload);
-        // Refresh comments after any insert, update, or delete event
         getCommentsOfSpecificArticle(article_id).then((response) => {
           setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
         });
       })
       .subscribe();
+    console.log("Subscription:", commentsSubscription);
 
     // Clean up the subscription when the component unmounts
     return () => {

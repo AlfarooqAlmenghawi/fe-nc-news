@@ -1,6 +1,7 @@
 import supabase from "./supabaseClient.js";
 
 const subscribeToArticles = () => {
+  console.log(supabase);
   const subscription = supabase
     .from("articles")
     .on("*", (payload) => {
