@@ -142,19 +142,29 @@ function IndividualArticle() {
 
     console.log("Supabase client:", supabase);
     const commentsSubscription = supabase
-      .from("comments")
-      .on("*", (payload) => {
-        console.log("Change received!", payload);
-        getCommentsOfSpecificArticle(article_id).then((response) => {
-          setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
-        });
-      })
-      .subscribe();
-    console.log("Subscription:", commentsSubscription);
+      .channel("simple-comments-channel")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "comments",
+        },
+        (payload) => {
+          console.log("Simple change received!", payload);
+          getCommentsOfSpecificArticle(article_id).then((response) => {
+            setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
+            console.log(response.data.commentsOfThisArticle);
+          });
+        }
+      )
+      .subscribe((status) => {
+        console.log("Subscription status:", status);
+      });
 
-    // Clean up the subscription when the component unmounts
+    // Clean up subscription when the component unmounts
     return () => {
-      supabase.removeSubscription(commentsSubscription);
+      supabase.removeChannel(commentsSubscription);
     };
   }, [article_id]);
 
