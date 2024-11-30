@@ -15,8 +15,6 @@ import { CurrentUserContext } from "../contexts/User.jsx";
 import supabase from "../../supabaseClient.js";
 // SUPABASE END
 
-// {/* <p>Individual Article here, article is {article.title}</p>; */}
-
 function IndividualArticle() {
   const { currentPageLabel, setCurrentPageLabel } = useContext(
     CurrentPageLabelContext
@@ -41,17 +39,10 @@ function IndividualArticle() {
 
   const [currentInput, setCurrentInput] = useState("");
 
-  // setCurrentPageLabel(article.title);
-
   function handleUpvote() {
     setVotes((currentVotes) => currentVotes + 1);
     upvoteSpecificArticle(article_id)
       .then(() => {
-        // console.log(
-        //   `Successful, votes are now ${votes + 1}. Upvoted by ${
-        //     currentUser.username
-        //   } (${currentUser.name})`
-        // );
         setErrorOnScreen("");
       })
       .catch((error) => {
@@ -64,11 +55,6 @@ function IndividualArticle() {
     setVotes((currentVotes) => currentVotes - 1);
     downvoteSpecificArticle(article_id)
       .then(() => {
-        // // console.log(
-        //   `Successful, votes are now ${votes - 1}. Downvoted by ${
-        //     currentUser.username
-        //   } (${currentUser.name})`
-        // );
         setErrorOnScreen("");
       })
       .catch((error) => {
@@ -81,11 +67,9 @@ function IndividualArticle() {
     event.preventDefault();
     setIsPosting(true);
     if (currentInput === "") {
-      // console.log("Write something first please");
       setCommentErrorOnScreen("Comment cannot be empty");
       setIsPosting(false);
     } else {
-      // console.log("Attempting to post comment", currentInput);
       postCommentToSpecificArticle(
         article_id,
         currentInput,
@@ -95,7 +79,6 @@ function IndividualArticle() {
           getCommentsOfSpecificArticle(article_id).then((response) => {
             setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
           });
-          // console.log(response);
           setCommentErrorOnScreen("");
           setTextBox("");
           setIsPosting(false);
@@ -109,21 +92,17 @@ function IndividualArticle() {
 
   function deleteComment(event) {
     const commentID = event.currentTarget.dataset.commentid;
-    // console.log("attempting to delete comment", commentID);
+
     setIsDeleting({
       status: true,
       comment_id: commentID,
     });
-    console.log({
-      status: true,
-      comment_id: commentID,
-    });
+
     deleteSpecificComment(commentID)
       .then(() => {
         getCommentsOfSpecificArticle(article_id)
           .then((response) => {
             setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
-            // console.log("Deleted comment number", commentID, "successfully");
             setIsDeleting({
               status: false,
               comment_id: null,
@@ -182,7 +161,6 @@ function IndividualArticle() {
               setCommentsOfIndividualArticle(
                 response.data.commentsOfThisArticle
               );
-              console.log(response.data.commentsOfThisArticle);
             })
             .catch((error) => {
               setCommentsOfIndividualArticle([]);
@@ -193,7 +171,6 @@ function IndividualArticle() {
         console.log("Subscription status:", status);
       });
 
-    // Clean up subscription when the component unmounts
     return () => {
       supabase.removeChannel(commentsSubscription);
     };
@@ -249,7 +226,6 @@ function IndividualArticle() {
             <form onSubmit={postComment} className="commenting-wrap">
               <textarea
                 onChange={(event) => {
-                  // console.log(event.target.value);
                   setCurrentInput(event.target.value);
                 }}
                 className="commenting-input"

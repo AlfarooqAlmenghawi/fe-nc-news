@@ -12,14 +12,12 @@ function Authentication() {
   const [users, setUsers] = useState([]);
 
   function handleUserClick(event) {
-    // console.log(event.currentTarget.dataset.username);
     setCurrentUser(event.currentTarget.dataset);
   }
 
   useEffect(() => {
     getUsers().then((response) => {
       setUsers(response.data.Users);
-      // console.log(response);
     });
   }, []);
 

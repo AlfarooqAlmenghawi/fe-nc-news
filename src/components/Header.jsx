@@ -16,17 +16,11 @@ function Header() {
   const isAuthenticationRoute = location.pathname.includes("/authentication");
 
   function navigateToSignIn() {
-    // console.log("Button clicked");
     navigate(`/authentication`);
   }
 
   function test() {
     setShowMenuBar(!showMenuBar);
-    // if (!playing) {
-    //   var audio = new Audio("../../test/onthegang.mp3");
-    //   playing = true;
-    //   audio.play();
-    /// }
   }
 
   return (

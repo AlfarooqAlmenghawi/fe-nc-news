@@ -16,7 +16,7 @@ function Home() {
   function handleClick(event) {
     const articleName = event.currentTarget.dataset.articlename;
     const articleID = event.currentTarget.dataset.articleid;
-    // console.log(`The ${articleName} article clicked`);
+
     navigate(`/articles/${articleID}`);
   }
 
@@ -38,10 +38,7 @@ function Home() {
         break;
     }
 
-    // console.log(queries, "in Home.jsx");
-
     getArticles(queries).then((response) => {
-      // console.log(response);
       setArticles(response.data.articlesWithTotalComments);
     });
   }
@@ -61,10 +58,7 @@ function Home() {
         break;
     }
 
-    // console.log(queries, "in Home.jsx");
-
     getArticles(queries).then((response) => {
-      // console.log(response);
       setArticles(response.data.articlesWithTotalComments);
     });
   }

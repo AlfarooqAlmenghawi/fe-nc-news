@@ -15,12 +15,10 @@ function ArticlesByTopic() {
 
   const { topic } = useParams();
 
-  // setCurrentPageLabel("Loading");
-
   function handleClick(event) {
     const articleName = event.currentTarget.dataset.articlename;
     const articleID = event.currentTarget.dataset.articleid;
-    // console.log(`The ${articleName} article clicked`);
+
     navigate(`/articles/${articleID}`);
   }
 
@@ -42,10 +40,7 @@ function ArticlesByTopic() {
         break;
     }
 
-    // console.log(queries, "in ArticlesByTopic.jsx");
-
     getArticlesByTopic(topic, queries).then((response) => {
-      // console.log(response);
       setArticlesByTopic(response.data.articlesWithTotalComments);
     });
   }
@@ -65,10 +60,7 @@ function ArticlesByTopic() {
         break;
     }
 
-    // console.log(queries, "in ArticlesByTopic.jsx");
-
     getArticlesByTopic(topic, queries).then((response) => {
-      // console.log(response);
       setArticlesByTopic(response.data.articlesWithTotalComments);
     });
   }
@@ -76,7 +68,6 @@ function ArticlesByTopic() {
   useEffect(() => {
     getArticlesByTopic(topic, queries)
       .then((response) => {
-        // console.log(response);
         setArticlesByTopic(response.data.articlesWithTotalComments);
         setCurrentPageLabel("Articles related to " + topic);
       })
@@ -86,8 +77,6 @@ function ArticlesByTopic() {
         );
       });
   }, []);
-
-  // setCurrentPageLabel("Articles related to " + topic);
 
   return (
     <>
