@@ -80,17 +80,21 @@ function Home() {
   return (
     <>
       <h2 className="current-page-label">{currentPageLabel}</h2>
-      <select onChange={handleStatsSortingChange}>
-        <option>None</option>
-        <option>Date</option>
-        <option>Comment Count</option>
-        <option>Votes</option>
-      </select>
-      <select onChange={handleOrderSortingChange}>
-        <option>None</option>
-        <option>Ascending</option>
-        <option>Descending</option>
-      </select>
+      {articles.length ? (
+        <>
+          <select onChange={handleStatsSortingChange}>
+            <option>None</option>
+            <option>Date</option>
+            <option>Comment Count</option>
+            <option>Votes</option>
+          </select>
+          <select onChange={handleOrderSortingChange}>
+            <option>None</option>
+            <option>Ascending</option>
+            <option>Descending</option>
+          </select>
+        </>
+      ) : null}
       <div className="all-the-articles">
         {articles.map((article) => {
           const articleDate = new Date(article.created_at);
