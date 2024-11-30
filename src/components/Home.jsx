@@ -82,17 +82,27 @@ function Home() {
       <h2 className="current-page-label">{currentPageLabel}</h2>
       {articles.length ? (
         <>
-          <select onChange={handleStatsSortingChange}>
-            <option>None</option>
-            <option>Date</option>
-            <option>Comment Count</option>
-            <option>Votes</option>
-          </select>
-          <select onChange={handleOrderSortingChange}>
-            <option>None</option>
-            <option>Ascending</option>
-            <option>Descending</option>
-          </select>
+          <div className="filter">
+            <div className="filter-contents-to-center">
+              <p className="filter-label">Sort By: </p>
+              <select
+                className="filter-dropdown"
+                onChange={handleStatsSortingChange}
+              >
+                <option>Date</option>
+                <option>Comment Count</option>
+                <option>Votes</option>
+              </select>
+              <p className="filter-label">Order: </p>
+              <select
+                className="filter-dropdown"
+                onChange={handleOrderSortingChange}
+              >
+                <option>Descending</option>
+                <option>Ascending</option>
+              </select>
+            </div>
+          </div>
         </>
       ) : null}
       <div className="all-the-articles">

@@ -382,6 +382,41 @@
   opacity: 0.4;
 }
 
+.filter {
+  font-family: "Aku&Kamu", sans-serif;
+  font-weight: 500;
+  font-size: 1.5em;
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.filter-label {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.filter-contents-to-center {
+  display: flex;
+  margin: auto;
+}
+
+.filter-dropdown {
+  font-family: "Aku&Kamu", sans-serif;
+  font-weight: 500;
+  height: 25px;
+  margin: auto;
+  flex-direction: row;
+  border: 1px dashed;
+  cursor: pointer;
+}
+
+.filter-dropdown:hover {
+  color: rgb(175, 20, 51);
+}
+
 @media screen and (min-width: 301px) and (max-width: 501px) {
   .things-at-the-very-top {
     display: flex;
@@ -453,6 +488,38 @@
     width: 4em;
     border: 1px dashed;
     margin-bottom: 1px;
+  }
+
+  .filter {
+    font-family: "Aku&Kamu", sans-serif;
+    font-weight: 500;
+    font-size: 1.5em;
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    text-align: center;
+    margin: 0;
+  }
+
+  .filter-contents-to-center {
+    display: block;
+  }
+
+  .filter-dropdown {
+    font-family: "Aku&Kamu", sans-serif;
+    font-weight: 500;
+    flex-direction: column;
+    border: 1px dashed;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .filter-dropdown:hover {
+    color: rgb(175, 20, 51);
   }
 }
 
@@ -528,5 +595,37 @@
     width: 4em;
     border: 1px dashed;
     margin-bottom: 1px;
+  }
+
+  .filter {
+    font-family: "Aku&Kamu", sans-serif;
+    font-weight: 500;
+    font-size: 1.5em;
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    text-align: center;
+    margin: 0;
+  }
+
+  .filter-contents-to-center {
+    display: block;
+  }
+
+  .filter-dropdown {
+    font-family: "Aku&Kamu", sans-serif;
+    font-weight: 500;
+    flex-direction: column;
+    border: 1px dashed;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .filter-dropdown:hover {
+    color: rgb(175, 20, 51);
   }
 }
