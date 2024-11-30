@@ -27,7 +27,10 @@ function IndividualArticle() {
   const [commentsOfIndividualArticle, setCommentsOfIndividualArticle] =
     useState([]);
   const [isPosting, setIsPosting] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState({
+    status: false,
+    comment_id: null,
+  });
   const [votes, setVotes] = useState(0);
   const [errorOnScreen, setErrorOnScreen] = useState("");
   const [commentErrorOnScreen, setCommentErrorOnScreen] = useState("");
@@ -98,7 +101,6 @@ function IndividualArticle() {
           setIsPosting(false);
         })
         .catch((error) => {
-          // console.log(error);
           setCommentErrorOnScreen("Error");
           setIsPosting(false);
         });
@@ -108,18 +110,34 @@ function IndividualArticle() {
   function deleteComment(event) {
     const commentID = event.currentTarget.dataset.commentid;
     // console.log("attempting to delete comment", commentID);
-    setIsDeleting(true);
+    setIsDeleting({
+      status: true,
+      comment_id: commentID,
+    });
+    console.log({
+      status: true,
+      comment_id: commentID,
+    });
     deleteSpecificComment(commentID)
       .then(() => {
-        getCommentsOfSpecificArticle(article_id).then((response) => {
-          setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
-          // console.log("Deleted comment number", commentID, "successfully");
-          setIsDeleting(false);
-        });
+        getCommentsOfSpecificArticle(article_id)
+          .then((response) => {
+            setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
+            // console.log("Deleted comment number", commentID, "successfully");
+            setIsDeleting({
+              status: false,
+              comment_id: null,
+            });
+          })
+          .catch((error) => {
+            setCommentsOfIndividualArticle([]);
+          });
       })
       .catch((error) => {
-        // console.log(error);
-        setIsDeleting(false);
+        setIsDeleting({
+          status: false,
+          comment_id: null,
+        });
       });
   }
 
@@ -131,7 +149,6 @@ function IndividualArticle() {
         setCurrentPageLabel(response.data.article[0].title);
       })
       .catch((error) => {
-        // console.log(error.status);
         setArticle([]);
         setCurrentPageLabel("Article doesn't seem to exist");
       });
@@ -142,8 +159,8 @@ function IndividualArticle() {
         setLoadingCommentsStatus(false);
       })
       .catch((error) => {
-        // console.log(error);
         setCommentsOfIndividualArticle([]);
+        setLoadingCommentsStatus(false);
       });
 
     // SUPABASE START
@@ -160,10 +177,16 @@ function IndividualArticle() {
         },
         (payload) => {
           console.log("Simple change received!", payload);
-          getCommentsOfSpecificArticle(article_id).then((response) => {
-            setCommentsOfIndividualArticle(response.data.commentsOfThisArticle);
-            console.log(response.data.commentsOfThisArticle);
-          });
+          getCommentsOfSpecificArticle(article_id)
+            .then((response) => {
+              setCommentsOfIndividualArticle(
+                response.data.commentsOfThisArticle
+              );
+              console.log(response.data.commentsOfThisArticle);
+            })
+            .catch((error) => {
+              setCommentsOfIndividualArticle([]);
+            });
         }
       )
       .subscribe((status) => {
@@ -186,7 +209,7 @@ function IndividualArticle() {
       {currentPageLabel ? (
         <h2 className="current-page-label">{currentPageLabel}</h2>
       ) : (
-        <h2 className="current-page-label">Loading...</h2>
+        <h2 className="current-page-label">Loading ARTICLE...</h2>
       )}
       {article.length !== 0 ? (
         <div className="full-individual-article">
@@ -221,7 +244,7 @@ function IndividualArticle() {
         <p></p>
       )}
       {!loadingCommentsStatus ? (
-        <div className="full-individual-article-comments">
+        <>
           {currentUser ? (
             <form onSubmit={postComment} className="commenting-wrap">
               <textarea
@@ -249,52 +272,58 @@ function IndividualArticle() {
               )}
             </form>
           ) : (
-            <p>Please Log In.</p>
+            <p className="comments-label">Please log in.</p>
           )}
-          <p>{commentErrorOnScreen}</p>
-          <div className="entire-comments-of-full-individual-article">
-            <p class="comments-label">Comments:</p>
-            {commentsOfIndividualArticle.map((comment) => {
-              const commentDate = new Date(comment.created_at);
-              const formatCommentDate = commentDate.toLocaleString();
-              return (
-                <div className="individual-comment">
-                  <p>Comment: {comment.body}</p>
-                  <p>
-                    By: {comment.author} at {formatCommentDate}
-                  </p>
-                  <p>Upvotes: {comment.votes}</p>
-                  {currentUser &&
-                  (currentUser.username === comment.author ||
-                    currentUser.username === "Alfarooq") ? (
-                    isDeleting ? (
-                      <button
-                        data-commentid={comment.comment_id}
-                        onClick={deleteComment}
-                        class="commenting-delete-button"
-                        disabled
-                      >
-                        Deleting
-                      </button>
-                    ) : (
-                      <button
-                        data-commentid={comment.comment_id}
-                        onClick={deleteComment}
-                        class="commenting-delete-button"
-                      >
-                        Delete
-                      </button>
-                    )
-                  ) : (
-                    <p></p>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+          {commentsOfIndividualArticle.length ? (
+            <div className="full-individual-article-comments">
+              <div className="entire-comments-of-full-individual-article">
+                <p className="comments-label">Comments:</p>
+                {commentsOfIndividualArticle.map((comment) => {
+                  const commentDate = new Date(comment.created_at);
+                  const formatCommentDate = commentDate.toLocaleString();
+                  return (
+                    <div className="individual-comment">
+                      <p>Comment: {comment.body}</p>
+                      <p>
+                        By: {comment.author} at {formatCommentDate}
+                      </p>
+                      <p>Upvotes: {comment.votes}</p>
+                      {currentUser &&
+                      (currentUser.username === comment.author ||
+                        currentUser.username === "Alfarooq") ? (
+                        isDeleting.status &&
+                        isDeleting.comment_id == comment.comment_id ? (
+                          <button
+                            data-commentid={comment.comment_id}
+                            onClick={deleteComment}
+                            class="commenting-delete-button"
+                            disabled
+                          >
+                            Deleting
+                          </button>
+                        ) : (
+                          <button
+                            data-commentid={comment.comment_id}
+                            onClick={deleteComment}
+                            class="commenting-delete-button"
+                          >
+                            Delete
+                          </button>
+                        )
+                      ) : (
+                        <p></p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <p>{commentErrorOnScreen}</p>
+          )}
+        </>
       ) : (
-        <h2 className="current-page-label">Loading COMMENTS...</h2>
+        <p className="current-page-label">Loading COMMENTS...</p>
       )}
     </>
   );

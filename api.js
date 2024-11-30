@@ -101,9 +101,14 @@ function getCommentsOfSpecificArticle(ARTICLE_ID) {
     timeout: 10000,
   });
 
-  return apiClient.get(`/articles/${ARTICLE_ID}/comments`).then((response) => {
-    return response;
-  });
+  return apiClient
+    .get(`/articles/${ARTICLE_ID}/comments`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
 }
 
 function upvoteSpecificArticle(ARTICLE_ID) {
