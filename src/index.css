@@ -120,6 +120,7 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
   gap: 50px;
 }
 
@@ -305,6 +306,7 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
   gap: 5px;
 }
 
@@ -352,6 +354,7 @@
   border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
   gap: 20px;
 }
 
