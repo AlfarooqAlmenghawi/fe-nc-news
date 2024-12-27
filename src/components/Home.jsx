@@ -1,7 +1,8 @@
 import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { CurrentPageLabelContext } from "../contexts/CurrentPageLabel.jsx";
-import { getArticles } from "../../api.js";
+import { CurrentUserContext } from "../contexts/User.jsx";
+import { getArticles, deleteSpecificArticle } from "../../api.js";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
@@ -9,7 +10,8 @@ function Home() {
   const { currentPageLabel, setCurrentPageLabel } = useContext(
     CurrentPageLabelContext
   );
-
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  console.log(currentUser);
   const [articles, setArticles] = useState([]);
   const navigate = useNavigate();
 
@@ -63,6 +65,15 @@ function Home() {
     });
   }
 
+  function deleteTheArticle(event) {
+    const articleID = event.currentTarget.dataset.articleid;
+    deleteSpecificArticle(articleID).then(() => {
+      getArticles(queries).then((response) => {
+        setArticles(response.data.articlesWithTotalComments);
+      });
+    });
+  }
+
   useEffect(() => {
     getArticles(queries).then((response) => {
       setArticles(response.data.articlesWithTotalComments);
@@ -99,29 +110,42 @@ function Home() {
           </div>
         </>
       ) : null}
-      <div className="all-the-articles">
+      <div className="all-the-articles" key={1}>
         {articles.map((article) => {
           const articleDate = new Date(article.created_at);
           const formatArticleDate = articleDate.toLocaleString();
           return (
             <>
-              <div
-                data-articlename={article.title}
-                data-articleid={article.article_id}
-                className="individual-article"
-                onClick={handleClick}
-              >
-                <img
-                  className="individual-article-image"
-                  src={article.article_img_url}
-                ></img>
-                <div className="article-info">
-                  <h3 class="article-title">{article.title}</h3>
-                  <p class="article-text">Author: {article.author}</p>
-                  <p class="article-text">Created: {formatArticleDate}</p>
-                  <p class="article-text">Topic: {article.topic}</p>
-                  <p class="article-text">Upvotes: {article.votes}</p>
-                  <p class="article-text">Comments: {article.comment_count}</p>
+              <div key={article.article_id}>
+                {currentUser?.username === "Alfarooq" ||
+                currentUser?.username === article.author ? (
+                  <button
+                    data-articleid={article.article_id}
+                    onClick={deleteTheArticle}
+                  >
+                    x
+                  </button>
+                ) : null}
+                <div
+                  data-articlename={article.title}
+                  data-articleid={article.article_id}
+                  className="individual-article"
+                  onClick={handleClick}
+                >
+                  <img
+                    className="individual-article-image"
+                    src={article.article_img_url}
+                  ></img>
+                  <div className="article-info">
+                    <h3 className="article-title">{article.title}</h3>
+                    <p className="article-text">Author: {article.author}</p>
+                    <p className="article-text">Created: {formatArticleDate}</p>
+                    <p className="article-text">Topic: {article.topic}</p>
+                    <p className="article-text">Upvotes: {article.votes}</p>
+                    <p className="article-text">
+                      Comments: {article.comment_count}
+                    </p>
+                  </div>
                 </div>
               </div>
             </>

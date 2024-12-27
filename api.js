@@ -3,7 +3,7 @@ import axios from "axios";
 function getArticles(QUERIES) {
   const apiClient = axios.create({
     baseURL: "https://nc-news-uocp.onrender.com/api/",
-    timeout: 10000,
+    timeout: 100000,
   });
 
   let endpoint = "";
@@ -142,6 +142,20 @@ function postCommentToSpecificArticle(ARTICLE_ID, COMMENT, USER) {
     .catch((error) => {});
 }
 
+function deleteSpecificArticle(ARTICLE_ID) {
+  const apiClient = axios.create({
+    baseURL: "https://nc-news-uocp.onrender.com/api/",
+    timeout: 3000,
+  });
+
+  return apiClient
+    .delete(`/articles/${ARTICLE_ID}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {});
+}
+
 function deleteSpecificComment(COMMENT_ID) {
   const apiClient = axios.create({
     baseURL: "https://nc-news-uocp.onrender.com/api/",
@@ -166,5 +180,6 @@ export {
   upvoteSpecificArticle,
   downvoteSpecificArticle,
   postCommentToSpecificArticle,
+  deleteSpecificArticle,
   deleteSpecificComment,
 };
