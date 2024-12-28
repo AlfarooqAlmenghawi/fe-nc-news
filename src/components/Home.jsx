@@ -11,7 +11,6 @@ function Home() {
     CurrentPageLabelContext
   );
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-  console.log(currentUser);
   const [articles, setArticles] = useState([]);
   const navigate = useNavigate();
 
