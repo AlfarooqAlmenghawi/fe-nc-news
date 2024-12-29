@@ -470,6 +470,38 @@
     border: 1px dashed;
   }
 
+  .signed-in {
+    all: unset;
+    font-family: "Aku&Kamu", sans-serif;
+    font-weight: 500;
+    width: 200px; /* Fixed width */
+    height: 55px;
+    margin: 0;
+    border: 1px dashed;
+    display: flex;
+    white-space: normal;
+  }
+
+  .signed-in:hover {
+    opacity: 0.6;
+  }
+
+  .user-title {
+    font-size: 10px;
+    margin: 0;
+  }
+
+  .user-full-name {
+    font-size: 10px;
+    margin: 0;
+  }
+
+  .user-image {
+    width: 3.25em;
+    height: 3.25em;
+    padding: 1px;
+  }
+
   .sideBar {
     width: 5%;
     display: flex;
@@ -575,6 +607,37 @@
     cursor: pointer;
     background-color: white;
     border: 1px dashed;
+  }
+
+  .signed-in {
+    all: unset;
+    font-family: "Aku&Kamu", sans-serif;
+    font-weight: 500;
+    width: 200px;
+    height: 3.5em;
+    margin: 0;
+    display: flex;
+    border: 1px dashed;
+  }
+
+  .signed-in:hover {
+    opacity: 0.6;
+  }
+
+  .user-title {
+    font-size: 1em;
+    margin: 0;
+  }
+
+  .user-full-name {
+    font-size: 0.5em;
+    margin: 0;
+  }
+
+  .user-image {
+    width: 3.25em;
+    height: 3.25em;
+    padding: 1px;
   }
 
   .sideBar {

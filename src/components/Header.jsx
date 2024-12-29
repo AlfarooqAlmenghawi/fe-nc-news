@@ -45,15 +45,14 @@ function Header() {
                 <p class="user-full-name">({currentUser.name})</p>
               </div>
             </div>
-          ) : isAuthenticationRoute ? (
-            <button
-              onClick={navigateToSignIn}
-              className="sign-in-button-dissapear"
-              disabled
-            >
-              Sign In
-            </button>
-          ) : (
+          ) : isAuthenticationRoute ? // <button
+          //   onClick={navigateToSignIn}
+          //   className="sign-in-button-dissapear"
+          //   disabled
+          // >
+          //   Sign In
+          // </button>
+          null : (
             <button
               onClick={navigateToSignIn}
               className="sign-in-button"
