@@ -148,8 +148,7 @@
 }
 
 .individual-article-image {
-  padding: 0.5em;
-  width: 11em;
+  width: 12em;
   text-align: center;
 }
 
@@ -458,6 +457,7 @@
   }
 
   .individual-article-image {
+    size: 1em;
   }
 
   .sign-in-button {
@@ -596,6 +596,7 @@
   }
 
   .individual-article-image {
+    size: 1em;
   }
 
   .sign-in-button {
