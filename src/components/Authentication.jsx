@@ -13,9 +13,22 @@ function Authentication() {
 
   function handleUserClick(event) {
     setCurrentUser(event.currentTarget.dataset);
+    const user = event.currentTarget.dataset;
+    console.log(user);
+    document.cookie = `username=${user.username}; name=${
+      user.name
+    }; avatar_url=${user.avatar_url}; max-age=${7 * 24 * 60 * 60}`;
   }
 
   useEffect(() => {
+    const cookies = document.cookie.split("; "); // Split all cookies into key-value pairs
+    console.log(cookies);
+    const cookieObject = {};
+    cookies.forEach((cookie) => {
+      const [key, value] = cookie.split("=");
+      cookieObject[key] = value;
+    });
+    console.log(cookieObject);
     getUsers().then((response) => {
       setUsers(response.data.Users);
     });
@@ -41,7 +54,7 @@ function Authentication() {
                   data-name={user.name}
                   data-avatar_url={user.avatar_url}
                   onClick={handleUserClick}
-                  class="user-signed-in-button"
+                  className="user-signed-in-button"
                   disabled
                 >
                   Signed In
@@ -52,7 +65,7 @@ function Authentication() {
                   data-name={user.name}
                   data-avatar_url={user.avatar_url}
                   onClick={handleUserClick}
-                  class="user-sign-in-button"
+                  className="user-sign-in-button"
                 >
                   Sign In
                 </button>

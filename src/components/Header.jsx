@@ -36,17 +36,16 @@ function Header() {
           />
           <h1 className="website-title">Articles and News</h1>
           {currentUser ? (
-            <div class="signed-in">
-              <div class="user-image">
-                <img class="user-image" src={currentUser.avatar_url} />
+            <div className="signed-in">
+              <div className="user-image">
+                <img className="user-image" src={currentUser.avatar_url} />
               </div>
               <div>
-                <p class="user-title">{currentUser.username}</p>
-                <p class="user-full-name">({currentUser.name})</p>
+                <p className="user-title">{currentUser.username}</p>
+                <p className="user-full-name">({currentUser.name})</p>
               </div>
             </div>
-          ) : isAuthenticationRoute ? // <button
-          //   onClick={navigateToSignIn}
+          ) : isAuthenticationRoute ? //   onClick={navigateToSignIn} // <button
           //   className="sign-in-button-dissapear"
           //   disabled
           // >
