@@ -14,21 +14,12 @@ function Authentication() {
   function handleUserClick(event) {
     setCurrentUser(event.currentTarget.dataset);
     const user = event.currentTarget.dataset;
-    console.log(user);
-    document.cookie = `username=${user.username}; name=${
-      user.name
-    }; avatar_url=${user.avatar_url}; max-age=${7 * 24 * 60 * 60}`;
+    document.cookie = `user=${encodeURIComponent(
+      JSON.stringify(user)
+    )}; max-age=${7 * 24 * 60 * 60}`;
   }
 
   useEffect(() => {
-    const cookies = document.cookie.split("; "); // Split all cookies into key-value pairs
-    console.log(cookies);
-    const cookieObject = {};
-    cookies.forEach((cookie) => {
-      const [key, value] = cookie.split("=");
-      cookieObject[key] = value;
-    });
-    console.log(cookieObject);
     getUsers().then((response) => {
       setUsers(response.data.Users);
     });
@@ -42,9 +33,9 @@ function Authentication() {
       <h3 className="current-page-label">SELECT A USER BELOW TO LOGIN</h3>{" "}
       {/* The class name "current-page-label" for the h3 tag above is just to take the design from the CSS */}
       <div className="all-the-users">
-        {users.map((user) => {
+        {users.map((user, index) => {
           return (
-            <div className="individual-user">
+            <div className="individual-user" key={index}>
               <img className="individual-user-image" src={user.avatar_url} />
               <p>Username: {user.username}</p>
               <p>Name: {user.name}</p>

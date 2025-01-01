@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CurrentPageLabelContext } from "../contexts/CurrentPageLabel.jsx";
 import { CurrentUserContext } from "../contexts/User.jsx";
 import menuIcon from "../../images/icon_small.png";
@@ -22,6 +22,14 @@ function Header() {
   function test() {
     setShowMenuBar(!showMenuBar);
   }
+
+  useEffect(() => {
+    const [key, value] = document.cookie.split("=");
+    const cookieObject = JSON.parse(decodeURIComponent(value));
+    if (cookieObject) {
+      setCurrentUser(cookieObject);
+    }
+  }, []);
 
   return (
     <>
@@ -45,8 +53,7 @@ function Header() {
                 <p className="user-full-name">({currentUser.name})</p>
               </div>
             </div>
-          ) : isAuthenticationRoute ? //   onClick={navigateToSignIn} // <button
-          //   className="sign-in-button-dissapear"
+          ) : isAuthenticationRoute ? //   className="sign-in-button-dissapear" //   onClick={navigateToSignIn} // <button
           //   disabled
           // >
           //   Sign In
