@@ -4,6 +4,7 @@ import { CurrentPageLabelProvider } from "./contexts/CurrentPageLabel";
 import { CurrentUserProvider } from "./contexts/User";
 import Header from "./components/Header";
 import Home from "./components/Home";
+import Articles from "./components/Articles";
 import Topics from "./components/Topics";
 import Authentication from "./components/Authentication";
 import IndividualArticle from "./components/IndividualArticle";
@@ -19,7 +20,7 @@ function App() {
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/articles" element={<Home />} />
+              <Route path="/articles" element={<Articles />} />
               <Route path="/topics" element={<Topics />} />
               <Route
                 path="/articles/:article_id"
