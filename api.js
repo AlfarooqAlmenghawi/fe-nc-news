@@ -15,11 +15,10 @@ function getArticles(QUERIES) {
   } else if (QUERIES.order && !QUERIES.sort_by) {
     endpoint = `/articles?order=${QUERIES.order}`;
   } else {
-    endpoint = "/articles";
+    endpoint = "/articles?";
   }
 
   console.warn("The endpoint is", endpoint);
-
   return apiClient.get(endpoint).then((response) => {
     return response;
   });

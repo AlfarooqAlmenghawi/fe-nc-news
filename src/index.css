@@ -68,6 +68,7 @@
   border: 1px dashed;
   display: flex;
   flex-wrap: wrap;
+  cursor: pointer;
 }
 
 .signed-in:hover {
@@ -480,6 +481,7 @@
     border: 1px dashed;
     display: flex;
     white-space: normal;
+    cursor: pointer;
   }
 
   .signed-in:hover {
@@ -619,6 +621,7 @@
     margin: 0;
     display: flex;
     border: 1px dashed;
+    cursor: pointer;
   }
 
   .signed-in:hover {
