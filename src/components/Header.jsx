@@ -24,10 +24,12 @@ function Header() {
   }
 
   useEffect(() => {
-    const [key, value] = document.cookie.split("=");
-    const cookieObject = JSON.parse(decodeURIComponent(value));
-    if (cookieObject) {
-      setCurrentUser(cookieObject);
+    if (document.cookie) {
+      const [key, value] = document.cookie.split("=");
+      const cookieObject = JSON.parse(decodeURIComponent(value));
+      if (cookieObject) {
+        setCurrentUser(cookieObject);
+      }
     }
   }, []);
 
@@ -53,8 +55,7 @@ function Header() {
                 <p className="user-full-name">({currentUser.name})</p>
               </div>
             </div>
-          ) : isAuthenticationRoute ? //   className="sign-in-button-dissapear" //   onClick={navigateToSignIn} // <button
-          //   disabled
+          ) : isAuthenticationRoute ? //   disabled //   className="sign-in-button-dissapear" //   onClick={navigateToSignIn} // <button
           // >
           //   Sign In
           // </button>
