@@ -12,14 +12,32 @@ function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   let playing = false;
-
   const isAuthenticationRoute = location.pathname.includes("/authentication");
 
   function navigateToSignIn() {
-    navigate(`/authentication`);
+    const [key, value] = document.cookie.split("=");
+    console.log(document.cookie);
+    if (key === "user" && value) {
+      console.log("Already signed in. Refresh");
+    } else {
+      navigate(`/authentication`);
+    }
+  }
+
+  function signOut() {
+    console.log("Signing out..");
+    const [key, value] = document.cookie.split("=");
+    const cookieObject = JSON.parse(decodeURIComponent(value));
+    console.log(cookieObject);
+    if (cookieObject.username) {
+      document.cookie = "user=; max-age=0; path=/";
+      setCurrentUser(null);
+      navigate(`/`);
+    }
   }
 
   function test() {
+    console.log(document.cookie);
     setShowMenuBar(!showMenuBar);
   }
 
@@ -28,6 +46,8 @@ function Header() {
     if (value) {
       const cookieObject = JSON.parse(decodeURIComponent(value));
       setCurrentUser(cookieObject);
+    } else {
+      setCurrentUser(null);
     }
   }, []);
 
@@ -48,16 +68,24 @@ function Header() {
               <div className="user-image">
                 <img className="user-image" src={currentUser.avatar_url} />
               </div>
-              <div>
+              <div onClick={signOut}>
                 <p className="user-title">{currentUser.username}</p>
                 <p className="user-full-name">({currentUser.name})</p>
               </div>
             </div>
-          ) : isAuthenticationRoute ? null : ( // </button> //   Sign In // > //   disabled //   className="sign-in-button-dissapear" //   onClick={navigateToSignIn} // <button
+          ) : isAuthenticationRoute ? null : (
+            // <button
+            //   disabled
+            //   className="sign-in-button-dissapear"
+            //   onClick={navigateToSignIn}
+            // >
+            //   {" "}
+            //   Sign In
+            // </button>
             <button
               onClick={navigateToSignIn}
               className="sign-in-button"
-              enabled
+              enabled="true"
             >
               Sign In
             </button>

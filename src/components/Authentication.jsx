@@ -14,6 +14,7 @@ function Authentication() {
   function handleUserClick(event) {
     setCurrentUser(event.currentTarget.dataset);
     const user = event.currentTarget.dataset;
+    document.cookie = "user=; max-age=0; path=/";
     document.cookie = `user=${encodeURIComponent(
       JSON.stringify(user)
     )}; max-age=${7 * 24 * 60 * 60}`;

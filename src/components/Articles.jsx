@@ -74,12 +74,11 @@ function Articles() {
   }
 
   useEffect(() => {
+    setCurrentPageLabel("Articles");
     getArticles(queries).then((response) => {
       setArticles(response.data.articlesWithTotalComments);
     });
   }, []);
-
-  setCurrentPageLabel("Articles");
 
   return (
     <>
